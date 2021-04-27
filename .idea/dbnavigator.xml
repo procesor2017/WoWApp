@@ -26,7 +26,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="a922db91-7099-4fba-a677-1cf9bd9fe443">
-        <schema name="main" object-types="view, column, table" />
+        <schema name="main" object-types="index, view, dataset trigger, column, constraint, table" />
       </connection>
     </loaded-nodes>
   </component>
@@ -42,7 +42,7 @@ INSERT INTO items (items_id, name, image) VALUES (4, "try", 1);
 CREATE TABLE items (items_id integer, name text not null, image integer, buy_price integer, sell_price integer, class integer, subclass integer);
 CREATE TABLE items_price_buyout (items_id integer);
 CREATE TABLE items_price_unitPrice (items_id integer);
-select * from items left join items_price_buyout on items_price_buyout.items_id = items.items_id join items_price_unitPrice on items_price_unitPrice.items_id = items.items_id where items.items_id=4358 ;]]></console>
+select items_price_buyout.*, items_price_unitPrice.* from items left join items_price_buyout on items_price_buyout.items_id = items.items_id join items_price_unitPrice on items_price_unitPrice.items_id = items.items_id where items.items_id=4358 ;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

@@ -16,9 +16,13 @@ public class Main {
         sqlDriver.createDBFromItems(apiCall.auctions_items);
 
         apiCall.createNewPriceFromAuction();
-        sqlDriver.addAllItemsPriceFromAuctionToDB(apiCall.auctions, ts);*/
+        sqlDriver.addAllItemsPriceFromAuctionToDB(apiCall.auctions, ts);
+        */
+
         SqlDriver sqlDriver = new SqlDriver();
         sqlDriver.getItemFromDB(4358);
+        sqlDriver.getLastItemsPriceFromDB(4358);
+
 
     }
 }

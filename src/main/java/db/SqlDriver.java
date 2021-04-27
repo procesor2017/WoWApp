@@ -116,10 +116,10 @@ public class SqlDriver {
             ResultSet rs = statement.executeQuery(sql);
             long auctionPrice = 0;
 
-            if (rs.getLong(8)!= 0){
-                auctionPrice = rs.getLong(8);
-            }else if(rs.getLong(10)!= 0){
-                auctionPrice = rs.getLong(10);
+            if (rs.getLong(9)!= 0){
+                auctionPrice = rs.getLong(9);
+            }else if(rs.getLong(11)!= 0){
+                auctionPrice = rs.getLong(11);
             }else{
                 auctionPrice = 0;
             }
@@ -136,5 +136,68 @@ public class SqlDriver {
         return item;
     }
 
+    public long getLastItemsPriceFromDB(Integer id){
+        Statement statement = null;
+        Connection connection = null;
+        String sql = "select * from items left join items_price_buyout on items_price_buyout.items_id = items.items_id join items_price_unitPrice on items_price_unitPrice.items_id = items.items_id where items.items_id=" + id;
+        Item item = null;
+        long auctionPrice = 0;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:sqlite:src/main/java/db/ItemDatabase.db");
+            connection.setAutoCommit(true);
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+
+            if (rs.getLong(9)!= 0){
+                auctionPrice = rs.getLong(9);
+            }else if(rs.getLong(11)!= 0){
+                auctionPrice = rs.getLong(11);
+            }else{
+                auctionPrice = 0;
+            }
+            statement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println(auctionPrice);
+        return auctionPrice;
+    }
+
+    public long getLastItemsPriceIn24hFromDB(Integer id){
+        Statement statement = null;
+        Connection connection = null;
+        String sql = "select items_price_buyout.*, items_price_unitPrice.* from items left join items_price_buyout on items_price_buyout.items_id = items.items_id join items_price_unitPrice on items_price_unitPrice.items_id = items.items_id where items.items_id=" + id;
+        Item item = null;
+        long auctionPrice = 0;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:sqlite:src/main/java/db/ItemDatabase.db");
+            connection.setAutoCommit(true);
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            //Předělat
+            if (rs.getLong(9)!= 0){
+                auctionPrice = rs.getLong(9);
+            }else if(rs.getLong(11)!= 0){
+                auctionPrice = rs.getLong(11);
+            }else{
+                auctionPrice = 0;
+            }
+            statement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println(auctionPrice);
+        return auctionPrice;
+    }
 
 }
