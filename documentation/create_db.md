@@ -1,15 +1,11 @@
-import api.ApiCall;
-import db.SqlDriver;
-
-import java.sql.Timestamp;
 
 public class Main {
-    public static void main(String[] args){
-        /*
-        Full script for creating new DB
-        Timestamp ts = new Timestamp(System.currentTimeMillis());
-        ApiCall apiCall = new ApiCall();
-        SqlDriver sqlDriver = new SqlDriver();
+public static void main(String[] args){
+
+Full script for creating new DB
+Timestamp ts = new Timestamp(System.currentTimeMillis());
+ApiCall apiCall = new ApiCall();
+SqlDriver sqlDriver = new SqlDriver();
 
         apiCall.getToken();
         apiCall.createFullAcutionList();
@@ -17,7 +13,7 @@ public class Main {
 
         apiCall.createNewPriceFromAuction();
         sqlDriver.addAllItemsPriceFromAuctionToDB(apiCall.auctions, ts);
-        */
+        
 
         SqlDriver sqlDriver = new SqlDriver();
         sqlDriver.getItemFromDB(4358);
