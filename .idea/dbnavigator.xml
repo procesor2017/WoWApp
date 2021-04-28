@@ -24,25 +24,11 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes>
-      <connection connection-id="a922db91-7099-4fba-a677-1cf9bd9fe443">
-        <schema name="main" object-types="index, view, dataset trigger, column, constraint, table" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="a922db91-7099-4fba-a677-1cf9bd9fe443">
-      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[select * from items_price_buyout;
-select * from items_price_unitPrice;
-select * from items;
-select count (*) from items;
-select my_item_id from items limit 10;
-select * from items_price;
-INSERT INTO items (items_id, name, image) VALUES (4, "try", 1);
-CREATE TABLE items (items_id integer, name text not null, image integer, buy_price integer, sell_price integer, class integer, subclass integer);
-CREATE TABLE items_price_buyout (items_id integer);
-CREATE TABLE items_price_unitPrice (items_id integer);
-select items_price_buyout.*, items_price_unitPrice.* from items left join items_price_buyout on items_price_buyout.items_id = items.items_id join items_price_unitPrice on items_price_unitPrice.items_id = items.items_id where items.items_id=4358 ;]]></console>
+      <console name="Connection" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
