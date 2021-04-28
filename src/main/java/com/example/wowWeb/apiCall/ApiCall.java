@@ -20,9 +20,9 @@ public class ApiCall {
     String token;
 
     public void getToken(){
-        String tokenUrl = "https://us.battle.net/oauth/token";
-        String clientId = "127f6dc43d7345c9b79633f66f2878f6";
-        String clientSecret = "vxgSm6TpwDVM48z7CWCGbp9YN6yHZxSO";
+        String tokenUrl = "";
+        String clientId = "";
+        String clientSecret = "";
         String auth = Base64.getEncoder().encodeToString((clientId + ":" + clientSecret).getBytes());
         String requestBody = "grant_type=client_credentials";
 
