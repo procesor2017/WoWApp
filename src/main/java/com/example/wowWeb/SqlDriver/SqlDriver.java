@@ -1,11 +1,15 @@
 package com.example.wowWeb.SqlDriver;
 
+import com.example.wowWeb.apiCall.ApiCall;
 import com.example.wowWeb.math.MathModel;
 import com.example.wowWeb.model.AuctionItem;
 import com.example.wowWeb.model.Item;
+import com.example.wowWeb.model.Recipe;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SqlDriver {
     String sqlDbUrl = "jdbc:sqlite:ItemDatabase.db";
@@ -214,4 +218,53 @@ public class SqlDriver {
         System.out.println(avg);
         return avg;
     }
+
+    public void addRecipeToDb(Recipe recipe){
+        Statement statement = null;
+        Connection connection = null;
+        Integer recipe_id = recipe.getId();
+        String id = recipe_id.toString();
+        String recipeNamebef = recipe.getName().toString().replace("\"", "");
+
+        try {
+            connection = DriverManager.getConnection(sqlDbUrl);
+            connection.setAutoCommit(true);
+            statement = connection.createStatement();
+            statement.executeUpdate("INSERT INTO recipes_price (recipe_id) VALUES (" + id + ")");
+            statement.executeUpdate("INSERT INTO recipes (recipe_id, name, professionID, subProfessionID, item_id) VALUES (" + id + ", " + '"' + recipeNamebef + '"' + ", " + recipe.getProfessionID() + ", " + recipe.getSubProfessionID() + ", " + recipe.getItemId() +")");
+            for (int i = 0; i < recipe.getReagents().size(); i++){
+                String columnName = "reagent" + i;
+                statement.executeUpdate("UPDATE recipes SET " + '"' + columnName + '"' + " = " + '"' + recipe.getReagents().get(i) + '"' + " WHERE recipe_id = " + '"' + id + '"');
+            }
+            statement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("Add recipes: " + recipeNamebef + " was successful");
+    }
+
+    public void createRecipeDb(){
+        ApiCall apiCall = new ApiCall();
+        apiCall.getToken();
+        int receptNumber = 0;
+        List<Integer> prof_list = Arrays.asList(164, 165, 171, 185, 197, 202, 333, 755, 773);
+
+        for (int i = 0; i < prof_list.size(); i++){
+            int subProfId = apiCall.getSubProfession(prof_list.get(i));
+            ArrayList<Integer> recipeList = apiCall.getRecipeID(prof_list.get(i), subProfId);
+
+            for (int j = 0; j<recipeList.size(); j++){
+                addRecipeToDb(apiCall.getRecipe(prof_list.get(i), subProfId, recipeList.get(j)));
+                receptNumber++;
+            }
+
+            System.out.println("Přídáno z profese: " + prof_list.get(i) + " receptů: " + receptNumber);
+        }
+
+        System.out.println("Přídáno: " + receptNumber + " receptů");
+    }
+
 }

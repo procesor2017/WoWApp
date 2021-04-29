@@ -2,17 +2,22 @@ package com.example.wowWeb.apiCall;
 
 import com.example.wowWeb.model.AuctionItem;
 import com.example.wowWeb.model.Item;
+import com.example.wowWeb.model.Recipe;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.List;
 
 public class ApiCall {
     public ArrayList<AuctionItem> auctions = new ArrayList<>();  // List s daty z aukce v podobě json
@@ -20,7 +25,7 @@ public class ApiCall {
     String token;
 
     public void getToken(){
-        String tokenUrl = "";
+        String tokenUrl = "https://us.battle.net/oauth/token";
         String clientId = "";
         String clientSecret = "";
         String auth = Base64.getEncoder().encodeToString((clientId + ":" + clientSecret).getBytes());
@@ -233,5 +238,142 @@ public class ApiCall {
     public void createNewPriceFromAuction(){
         getItemPriceFromAuction(token);
     }
+
+    public int getSubProfession(Integer profesionID){
+        String url = "https://us.api.blizzard.com/data/wow/profession/"+ profesionID +"?namespace=static-us&locale=en_US&access_token=" + token;
+        JSONParser parser = new JSONParser();
+        ArrayList data_list = new ArrayList();
+        int subProfession = 0;
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        HttpClient client = HttpClient.newBuilder().build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // Parse response
+        try {
+            System.out.println(response);
+            JSONObject json = (JSONObject) parser.parse(response.body());
+            data_list = (ArrayList) json.get("skill_tiers");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < data_list.size(); i++){
+            JSONObject data_0 = (JSONObject) data_list.get(i);
+            if (data_0.get("name").toString().contains("Shadowlands")){
+                subProfession = Integer.parseInt(data_0.get("id").toString());
+                System.out.println("INF :: subprofession find: " + subProfession);
+            }
+        }
+        return subProfession;
+    }
+
+    public ArrayList<Integer> getRecipeID(Integer professionID, Integer subProfessionID){
+        String url = "https://us.api.blizzard.com/data/wow/profession/"+ professionID +"/skill-tier/"+ subProfessionID +"?namespace=static-us&locale=en_US&access_token=" + token;
+        JSONParser parser = new JSONParser();
+        ArrayList data_list_0 = new ArrayList();
+        ArrayList data_list = new ArrayList();
+        JSONObject data_list_1;
+        ArrayList<Integer> listOfRecipe = new ArrayList<>();
+
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        HttpClient client = HttpClient.newBuilder().build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // Parse response
+        try {
+            JSONObject json = (JSONObject) parser.parse(response.body());
+            data_list_0 = (ArrayList) json.get("categories");
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < data_list_0.size(); i++){
+            data_list_1 = (JSONObject) data_list_0.get(i);
+            data_list = (ArrayList) data_list_1.get("recipes");
+            for (int j = 0; j < data_list.size(); j++){
+                JSONObject data_0 = (JSONObject) data_list.get(j);
+                listOfRecipe.add(Integer.parseInt(data_0.get("id").toString()));
+            }
+        }
+        return listOfRecipe;
+    }
+
+    public Recipe getRecipe(Integer professionID, Integer subProfessionID, Integer recipeID){
+        String url = "https://us.api.blizzard.com/data/wow/recipe/"+ recipeID +"?namespace=static-us&locale=en_US&access_token=" + token;
+        JSONParser parser = new JSONParser();
+        ArrayList data_list_reagents = new ArrayList();
+        ArrayList data_list_modified_slots = new ArrayList();
+        ArrayList<Recipe> recipeList = new ArrayList<>();
+        JSONObject data_list_0;
+        JSONObject data_list_1;
+        ArrayList<Integer> reagentsId = new ArrayList<>();
+        String name = "";
+        Integer itemID = 0;
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        HttpClient client = HttpClient.newBuilder().build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // Parse response
+        try {
+            JSONObject json = (JSONObject) parser.parse(response.body());
+            name = json.get("name").toString();
+            data_list_reagents = (ArrayList) json.get("reagents");
+            data_list_1 = (JSONObject) json.get("crafted_item");
+            itemID = Integer.parseInt(data_list_1.get("id").toString());
+            data_list_modified_slots = (ArrayList) json.get("modified_crafting_slots");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < data_list_reagents.size(); i++){
+            data_list_0 = (JSONObject) data_list_reagents.get(i);
+            JSONObject reagent = (JSONObject) data_list_0.get("reagent");
+            reagentsId.add(Integer.parseInt(reagent.get("id").toString()));
+        }
+        if (data_list_modified_slots != null) {
+            for (int i = 0; i < data_list_modified_slots.size(); i++) {
+                data_list_0 = (JSONObject) data_list_modified_slots.get(i);
+                JSONObject reagent = (JSONObject) data_list_0.get("slot_type");
+                reagentsId.add(Integer.parseInt(reagent.get("id").toString()));
+            }
+        }
+
+        Recipe recipe = new Recipe(recipeID, name, itemID, professionID, subProfessionID);
+        recipe.setReagents(reagentsId);
+        return recipe;
+    }
+
+
 }
 
