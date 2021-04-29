@@ -1,6 +1,14 @@
 package com.example.wowWeb.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class AuctionItem {
+    @Id
+    @GeneratedValue
     private Integer id;
     private long auctionUnitPrice;
     private long auctionBuyout;

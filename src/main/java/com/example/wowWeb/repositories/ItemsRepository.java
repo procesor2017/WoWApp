@@ -13,3 +13,4 @@ public interface ItemsRepository extends JpaRepository<Item, Integer> {
     List<Item> findAll();
 
 }
+

@@ -11,13 +11,12 @@ public class Recipe {
     private Integer itemId;
     private ArrayList<Integer> reagents;
 
-    public Recipe(Integer id, String name, Integer itemId,Integer professionID, Integer subProfessionID) {
+    public Recipe(Integer id, String name, Integer itemId, Integer professionID, Integer subProfessionID) {
         this.id = id;
         this.name = name;
         this.professionID = professionID;
         this.subProfessionID = subProfessionID;
         this.itemId = itemId;
-
     }
 
     public Integer getId() {

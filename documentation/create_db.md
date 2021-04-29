@@ -22,3 +22,8 @@ SqlDriver sqlDriver = new SqlDriver();
 
     }
 }
+
+
+# nobrain
+cd C:\Users\jfort\IdeaProjects\wowWeb
+mvnw spring-boot:run

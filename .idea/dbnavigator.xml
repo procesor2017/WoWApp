@@ -26,19 +26,28 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="a922db91-7099-4fba-a677-1cf9bd9fe443">
-        <schema name="main" object-types="view, table, column" />
+        <schema name="main" object-types="dataset trigger, index, column, table, view, constraint" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="a922db91-7099-4fba-a677-1cf9bd9fe443">
-      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[create table recipes (recipe_id INTEGER primary key, name TEXT, professionID INTEGER, subProfessionID INTEGER, item_id INTEGER,reagent0 INTEGER, reagent1 INTEGER,  reagent2 INTEGER, reagent3 INTEGER, reagent4 INTEGER, reagent5 INTEGER,  reagent6 INTEGER, reagent7 INTEGER, reagent8 INTEGER, reagent9 INTEGER);
-create table recipes_price (recipe_id INTEGER primary key);
+      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[select * from items;
 select * from recipes;
 select * from recipes_price;
-delete from recipes;
-delete from recipes_price;
-select * from recipes where name = "Crafter's Mark II";]]></console>
+select * from actual_recipes_price;
+select * from recipes where name = "Crafter's Mark II";
+SELECT recipe_id FROM recipes;
+select * from items right join items_price_buyout on items_price_buyout.items_id = items.items_id right join items_price_unitPrice on items_price_unitPrice.items_id = items.items_id where items.items_id=4358
+select * from items left join items_price_buyout on items_price_buyout.items_id = items.items_id where items.items_id=4358;
+select * from recipes where "professionID" = 164;
+select * from recipes join items on items.items_id = recipes.item_id where "professionID" = 164;
+select * from recipes join items on items.items_id = recipes.item_id join items_price_buyout on items_price_buyout.items_id = items.items_id join items_price_unitPrice on "items_price_unitPrice".items_id=items.items_id join recipes_price on recipes.recipe_id = recipes_price.recipe_id where "professionID" = 164;
+select * from items where class = 4 and subclass = 4;
+select * from recipes join items on items.items_id = recipes.item_id where professionID = 164;
+select * from information_schema.columns;
+create table actual_recipes_profit (recipe_id INTEGER primary key, item_id INTEGER, name TEXT, actual_recipe_price integer);
+select * from actual_recipes_profit;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
