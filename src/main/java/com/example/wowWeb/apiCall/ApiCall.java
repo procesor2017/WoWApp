@@ -46,9 +46,7 @@ public class ApiCall {
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
         System.out.println(response.body());
@@ -350,7 +348,11 @@ public class ApiCall {
             name = json.get("name").toString();
             data_list_reagents = (ArrayList) json.get("reagents");
             data_list_1 = (JSONObject) json.get("crafted_item");
-            itemID = Integer.parseInt(data_list_1.get("id").toString());
+            if (data_list_1 == null){
+                itemID = Integer.parseInt(json.get("id").toString());
+            }else{
+                itemID = Integer.parseInt(data_list_1.get("id").toString());
+            }
             data_list_modified_slots = (ArrayList) json.get("modified_crafting_slots");
         } catch (ParseException e) {
             e.printStackTrace();
