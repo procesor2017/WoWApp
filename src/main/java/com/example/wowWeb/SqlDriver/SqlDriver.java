@@ -117,8 +117,11 @@ public class SqlDriver {
             connection.setAutoCommit(true);
             statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
-            item = new Item(rs.getString("name"), rs.getInt("items_id"), rs.getInt("image"), rs.getInt("buy_price"), rs.getInt("sell_price"), rs.getInt("class"),rs.getInt("subclass"));
-
+            if (rs.next()){
+                item = new Item(rs.getString("name"), rs.getInt("items_id"), rs.getInt("image"), rs.getInt("buy_price"), rs.getInt("sell_price"), rs.getInt("class"),rs.getInt("subclass"));
+            }else{
+                System.out.println("ITEM NOT FOUND");
+            }
             statement.close();
             connection.close();
 
@@ -126,7 +129,6 @@ public class SqlDriver {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        System.out.println(item.getName());
         return item;
     }
 
@@ -407,5 +409,23 @@ public class SqlDriver {
         return itemPricesList;
     }
 
+    public void addsItemsFromRecipes(){
+        ArrayList<Integer> recipeList = new ArrayList<>();
+        recipeList= getAllRecipeFromDB();
+
+        for(int i = 0; i < recipeList.size(); i++){
+            ApiCall apiCall = new ApiCall();
+            apiCall.getToken();
+            Recipe recipe = getRecipeFromDB(recipeList.get(i));
+            System.out.println(recipe.getItemId());
+            Item item = apiCall.getItem(recipe.getItemId());
+            System.out.println(item.toString());
+            if (getItemFromDB(item.getId()) == null){
+                addItem(item);
+            }else{
+                System.out.println("INF :: ITEM EXISTS");
+            }
+        }
+    }
 
 }

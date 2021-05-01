@@ -376,6 +376,47 @@ public class ApiCall {
         return recipe;
     }
 
+    public Item getItem(Integer itemID){
+        String url = "https://us.api.blizzard.com/data/wow/item/" + itemID + "?namespace=static-us&locale=en_US&access_token=" + token;
+        JSONParser parser = new JSONParser();
+        Item item = null;
 
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        HttpClient client = HttpClient.newBuilder().build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // Parse response
+        try {
+            JSONObject json = (JSONObject) parser.parse(response.body());
+            String name =  json.get("name").toString();
+            int itemId = Integer.parseInt(json.get("id").toString());
+
+            JSONObject item_class = (JSONObject) json.get("item_class");
+            JSONObject item_subclass = (JSONObject) json.get("item_subclass");
+            int itemClass = Integer.parseInt(item_class.get("id").toString());
+            int itemSublclass = Integer.parseInt(item_subclass.get("id").toString());
+
+            int purchase_price = Integer.parseInt(json.get("purchase_price").toString());
+            int sell_price = Integer.parseInt(json.get("sell_price").toString());
+
+            JSONObject item_image = (JSONObject) json.get("media");
+            int itemImage = Integer.parseInt(item_image.get("id").toString());
+
+            item = new Item(name, itemId, itemImage, purchase_price, sell_price, itemClass, itemSublclass);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return item;
+    }
 }
 
