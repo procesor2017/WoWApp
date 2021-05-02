@@ -1,11 +1,15 @@
 package com.example.wowWeb.math;
 
 import com.example.wowWeb.SqlDriver.SqlDriver;
+import com.example.wowWeb.model.Item;
 import com.example.wowWeb.model.Recipe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MathModel {
+    ArrayList<Integer> tradeSkillItemsList = new ArrayList<>(Arrays.asList(180733, 172056, 172057, 172058, 172059, 178786, 38682, 183952, 20815, 173168, 183954, 183955, 177062));
+
     public long avgOfArrayList(ArrayList arrayList){
         long sum = 0;
         if(!arrayList.isEmpty()){
@@ -22,12 +26,24 @@ public class MathModel {
         SqlDriver sqlDriver = new SqlDriver();
         ArrayList<Integer> itemsIdForCrafting = recipe.getReagents();
 
-        for (Integer itemID : itemsIdForCrafting){
-            sum += sqlDriver.getLastItemsPriceFromDB(itemID);
+        for (Integer itemID : itemsIdForCrafting) {
+            boolean itemsIsInTrade = false;
+            Item item = sqlDriver.getItemFromDB(itemID);
+            for(Integer tr_item : tradeSkillItemsList){
+                if (tr_item.equals(itemID)){
+                    itemsIsInTrade = true;
+                }
+            }
+            if (itemsIsInTrade) {
+                sum += item.getPurchasePrice();
+            } else {
+                long realItemSum = sqlDriver.getLastItemsPriceFromDB(itemID);
+                sum += realItemSum;
+            }
         }
-        System.out.println("sum: " + sum);
+        System.out.println("Celková suma za profky je: " + sum);
         long totalRecipePrice = sqlDriver.getLastItemsPriceFromDB(recipe.getItemId()) - sum;
-        System.out.println(totalRecipePrice);
+        System.out.println("celkový profit za recept je:" + totalRecipePrice);
         return totalRecipePrice;
     }
 

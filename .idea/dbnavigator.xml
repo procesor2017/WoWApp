@@ -26,17 +26,18 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="a922db91-7099-4fba-a677-1cf9bd9fe443">
-        <schema name="main" object-types="view, column, table" />
+        <schema name="main" object-types="table, view, column" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="a922db91-7099-4fba-a677-1cf9bd9fe443">
-      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[select * from items where items_id = 171428;
+      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[select * from items where items_id = 171828;
+select * from items where name = "Penumbra Thread";
 select * from recipes
 select * from recipes_price;
 select * from actual_recipes_profit;
-select * from recipes where name = "Crafter's Mark II";
+select * from recipes where recipe_id=42406;
 SELECT recipe_id FROM recipes;
 select * from items right join items_price_buyout on items_price_buyout.items_id = items.items_id right join items_price_unitPrice on items_price_unitPrice.items_id = items.items_id where items.items_id=171428;
 select * from items left join items_price_buyout on items_price_buyout.items_id = items.items_id where items.items_id=171428;
@@ -48,8 +49,15 @@ select * from recipes join items on items.items_id = recipes.item_id where profe
 select * from information_schema.columns;
 create table actual_recipes_profit (recipe_id INTEGER primary key, item_id INTEGER, name TEXT, actual_recipe_price integer);
 select * from actual_recipes_profit;
-select * from actual_recipes_profit where recipe_id=42384
-select * from items_price_buyout where items_id=171414;]]></console>
+select * from actual_recipes_profit where recipe_id=42406
+select * from items_price_buyout where items_id=171414;
+delete from items;
+delete from items_price_buyout;
+delete from items_price_unitPrice;
+select * from items_price_buyout;
+select * from items_price_unitPrice;
+create table items_price_buyout (items_id INTEGER primary key);
+create table items_price_unitPrice (items_id INTEGER primary key);]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

@@ -174,7 +174,8 @@ public class ApiCall {
                 Integer item_id = Integer.parseInt(data.get("id").toString());
                 JSONObject iImage = (JSONObject) data.get("media");
                 Integer item_image  = Integer.parseInt(iImage.get("id").toString());
-                Integer item_purchasePrice = Integer.parseInt(data.get("purchase_price").toString());
+                Integer purchase_quantity = Integer.parseInt(data.get("purchase_quantity").toString());
+                Integer item_purchasePrice = Integer.parseInt(data.get("purchase_price").toString()) / purchase_quantity;
                 Integer item_sellPrice = Integer.parseInt(data.get("sell_price").toString());
                 JSONObject iClass = (JSONObject) data.get("item_class");
                 Integer item_class = Integer.parseInt(iClass.get("id").toString());

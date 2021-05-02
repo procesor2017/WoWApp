@@ -154,7 +154,7 @@ public class SqlDriver {
                 }
             }else{
                 auctionPrice = 0;
-                System.out.println("Item doesnt exist on auction");
+                System.out.println("Item with: "+ id +" doesnt exist on auction");
             }
             statement.close();
             connection.close();
@@ -163,7 +163,7 @@ public class SqlDriver {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        System.out.println(auctionPrice);
+        System.out.println("Celková cena za item na aukci je: " + auctionPrice);
         return auctionPrice;
     }
 
