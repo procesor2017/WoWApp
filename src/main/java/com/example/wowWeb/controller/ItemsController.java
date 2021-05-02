@@ -1,18 +1,13 @@
 package com.example.wowWeb.controller;
 
-import com.example.wowWeb.SqlDriver.SqlDriver;
-import com.example.wowWeb.model.Item;
-import com.example.wowWeb.model.ItemPrice;
-import com.example.wowWeb.repositories.ItemPriceRepository;
 import com.example.wowWeb.repositories.ItemsRepository;
+import com.example.wowWeb.repositories.RecipesProfitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.ArrayList;
 
 
 @Controller
@@ -20,9 +15,8 @@ public class ItemsController {
 
     @Autowired
     ItemsRepository itemsRepository;
-
     @Autowired
-    ItemPriceRepository itemPriceRepository;
+    RecipesProfitRepository recipesProfitRepository;
 
 
     @RequestMapping(value="/showItems")
@@ -31,11 +25,13 @@ public class ItemsController {
         return "items";
     }
 
-    @RequestMapping(value="/try")
-    public String tryIt(Model model) {
-        model.addAttribute("itemPriceRepository", itemPriceRepository.findAll());
-        return "try";
+
+    @RequestMapping(value="/recipesProfit&id={professionID}")
+    public String recipesProfit(@PathVariable("professionID") Integer professionID, Model model) {
+        model.addAttribute("recipesProfit", recipesProfitRepository.findRecipeAccordToProfession(professionID));
+        return "recipesProfit";
     }
+
 
 
 }

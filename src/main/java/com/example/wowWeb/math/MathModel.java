@@ -41,9 +41,7 @@ public class MathModel {
                 sum += realItemSum;
             }
         }
-        System.out.println("Celková suma za profky je: " + sum);
         long totalRecipePrice = sqlDriver.getLastItemsPriceFromDB(recipe.getItemId()) - sum;
-        System.out.println("celkový profit za recept je:" + totalRecipePrice);
         return totalRecipePrice;
     }
 

@@ -20,6 +20,10 @@ public class AuctionItem {
 
     }
 
+    public AuctionItem(){
+        super();
+    }
+
     public int getId(){
         return id;
     }

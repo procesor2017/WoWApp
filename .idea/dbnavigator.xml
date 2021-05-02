@@ -26,7 +26,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="a922db91-7099-4fba-a677-1cf9bd9fe443">
-        <schema name="main" object-types="table, view, column" />
+        <schema name="main" object-types="column, view, table" />
       </connection>
     </loaded-nodes>
   </component>
@@ -34,7 +34,7 @@
     <connection id="a922db91-7099-4fba-a677-1cf9bd9fe443">
       <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[select * from items where items_id = 171828;
 select * from items where name = "Penumbra Thread";
-select * from recipes
+select * from recipes;
 select * from recipes_price;
 select * from actual_recipes_profit;
 select * from recipes where recipe_id=42406;
@@ -51,13 +51,11 @@ create table actual_recipes_profit (recipe_id INTEGER primary key, item_id INTEG
 select * from actual_recipes_profit;
 select * from actual_recipes_profit where recipe_id=42406
 select * from items_price_buyout where items_id=171414;
-delete from items;
-delete from items_price_buyout;
-delete from items_price_unitPrice;
 select * from items_price_buyout;
 select * from items_price_unitPrice;
 create table items_price_buyout (items_id INTEGER primary key);
-create table items_price_unitPrice (items_id INTEGER primary key);]]></console>
+create table items_price_unitPrice (items_id INTEGER primary key);
+select actual_recipes_profit.recipe_id, actual_recipes_profit.name, actual_recipes_profit.actual_recipe_price from actual_recipes_profit left join recipes on recipes.recipe_id = actual_recipes_profit.recipe_id where professionID = 164]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

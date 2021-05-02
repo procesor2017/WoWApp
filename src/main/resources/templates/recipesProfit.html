@@ -5,9 +5,9 @@
  <div class="container">
      <h1>Items</h1>
      <table>
-         <tr th:each="item : ${itemPriceRepository}">
+         <tr th:each="item : ${recipesProfit}">
              <td th:text="${item.name}">Name</td>
-             <td th:text="${item.lastAuctionPrice}">Name</td>
+             <td th:text="${item.actual_recipe_price}">Name</td>
          </tr>
      </table>
  </div>
