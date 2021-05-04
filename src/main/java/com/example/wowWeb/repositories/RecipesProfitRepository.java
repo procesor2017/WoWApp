@@ -18,8 +18,12 @@ public interface RecipesProfitRepository extends JpaRepository<RecipesProfit, In
 
 
     @Query(value = "select * from actual_recipes_profit " +
-            "left join recipes on recipes.recipe_id = actual_recipes_profit.recipe_id where professionID = ?1", nativeQuery = true)
+            "left join recipes on recipes.recipe_id = actual_recipes_profit.recipe_id where professionID = ?1 order by actual_recipe_price DESC", nativeQuery = true)
     List<RecipesProfit> findRecipeAccordToProfession(@PathVariable Integer professionID);
+
+    @Query(value = "select * from actual_recipes_profit " +
+            "left join recipes on recipes.recipe_id = actual_recipes_profit.recipe_id order by actual_recipe_price DESC", nativeQuery = true)
+    List<RecipesProfit> findAllRecipeWithProfit();
 
 }
 

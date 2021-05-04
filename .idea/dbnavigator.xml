@@ -26,7 +26,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="a922db91-7099-4fba-a677-1cf9bd9fe443">
-        <schema name="main" object-types="column, view, table" />
+        <schema name="main" object-types="table, view, column" />
       </connection>
     </loaded-nodes>
   </component>
@@ -55,7 +55,9 @@ select * from items_price_buyout;
 select * from items_price_unitPrice;
 create table items_price_buyout (items_id INTEGER primary key);
 create table items_price_unitPrice (items_id INTEGER primary key);
-select actual_recipes_profit.recipe_id, actual_recipes_profit.name, actual_recipes_profit.actual_recipe_price from actual_recipes_profit left join recipes on recipes.recipe_id = actual_recipes_profit.recipe_id where professionID = 164]]></console>
+select actual_recipes_profit.recipe_id, actual_recipes_profit.name, actual_recipes_profit.actual_recipe_price from actual_recipes_profit left join recipes on recipes.recipe_id = actual_recipes_profit.recipe_id where professionID = 164
+select * from actual_recipes_profit left join recipes on recipes.recipe_id = actual_recipes_profit.recipe_id;
+select * from actual_recipes_profit  left join recipes on recipes.recipe_id = actual_recipes_profit.recipe_id order by actual_recipe_price DESC"]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

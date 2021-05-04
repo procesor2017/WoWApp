@@ -6,21 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 @Controller
-public class ItemsController {
+public class HomeController {
 
     @Autowired
-    ItemsRepository itemsRepository;
+    RecipesProfitRepository recipesProfitRepository;
 
-    @RequestMapping(value="/showItems")
-    public String getItems(Model model) {
-        model.addAttribute("items", itemsRepository.findAll());
-        return "items";
+    @GetMapping("/")
+    String index(Model model) {
+        model.addAttribute("recipesProfit", recipesProfitRepository.findAllRecipeWithProfit());
+        return "index";
     }
+
 
 }

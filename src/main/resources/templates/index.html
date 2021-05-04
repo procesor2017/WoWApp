@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+</head>
+<body>
+<div class='banner'>
+    <div>
+        <h1 style='text-transform: uppercase; text-align: center; padding-top: 50px;'>Pure DATA</h1>
+    </div>
+</div>
+
+<div class="realBody">
+    <div class="leftSide">
+        <h4>Best Recipe</h4>
+        <div th:insert="fragments/table.html :: indexTableRecipe"></div>
+    </div>
+    <div class="rightSide">
+        <div th:insert="fragments/rightMenu.html :: menu"></div>
+    </div>
+
+</div>
+</body>
+</html>

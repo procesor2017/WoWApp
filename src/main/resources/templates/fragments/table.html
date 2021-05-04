@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+<div class="table" th:fragment="indexTableRecipe">
+    <div class="container">
+        <table>
+            <tr th:each="item,iterStat : ${recipesProfit}"
+                th:if="${iterStat.index} < 10" >
+                <td th:text="${item.name}">Name</td>
+                <td th:text="${item.actual_recipe_price} / 10000">Price</td></span>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="table" th:fragment="normalTableRecipe">
+    <div class="container">
+        <table>
+            <tr th:each="item,iterStat : ${recipesProfit}"
+                th:if="${iterStat.index} < 10" >
+                <td th:text="${item.name}">Name</td>
+                <td th:text="${item.actual_recipe_price} / 10000">Price</td></span>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

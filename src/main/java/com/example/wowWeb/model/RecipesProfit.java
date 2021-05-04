@@ -18,9 +18,9 @@ public class RecipesProfit {
     private String name;
 
     @Column(name = "actual_recipe_price")
-    private Integer actual_recipe_price;
+    private long actual_recipe_price;
 
-    public RecipesProfit(Integer recipe_id, Integer item_id, String name, Integer actual_recipe_price) {
+    public RecipesProfit(Integer recipe_id, Integer item_id, String name, long actual_recipe_price) {
         this.recipe_id = recipe_id;
         this.item_id = item_id;
         this.name = name;
@@ -43,7 +43,7 @@ public class RecipesProfit {
         return name;
     }
 
-    public Integer getActual_recipe_price() {
+    public long getActual_recipe_price() {
         return actual_recipe_price;
     }
 
