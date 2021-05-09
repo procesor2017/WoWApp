@@ -26,7 +26,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="a922db91-7099-4fba-a677-1cf9bd9fe443">
-        <schema name="main" object-types="table, view, column" />
+        <schema name="main" object-types="view, column, table" />
       </connection>
     </loaded-nodes>
   </component>
@@ -35,6 +35,7 @@
       <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[select * from items where items_id = 171828;
 select * from items where name = "Penumbra Thread";
 select * from recipes;
+select * from actual_recipes_profit;
 select * from recipes_price;
 select * from actual_recipes_profit;
 select * from recipes where recipe_id=42406;

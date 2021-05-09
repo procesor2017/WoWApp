@@ -7,6 +7,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
+
 
 public class ApiCall {
     public ArrayList<AuctionItem> auctions = new ArrayList<>();  // List s daty z aukce v podobě json
