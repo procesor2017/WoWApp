@@ -28,14 +28,13 @@ public class ApiCall {
 
     public void getToken(){
         String tokenUrl = "https://us.battle.net/oauth/token";
-        String clientId = "";
-        String clientSecret = "";
+        // === NAstavení proměných pro github actions ====
+        String clientId = System.getenv("clientID");
+        String clientSecret = System.getenv("clientSecret");
         String auth = Base64.getEncoder().encodeToString((clientId + ":" + clientSecret).getBytes());
         String requestBody = "grant_type=client_credentials";
 
-
         JSONParser parser = new JSONParser();
-
 
         HttpClient client = HttpClient.newBuilder().build();
         HttpRequest request = HttpRequest.newBuilder()
