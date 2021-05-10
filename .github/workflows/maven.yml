@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-
+    name: Build and deploy database
     runs-on: ubuntu-latest
     env: 
       clientID: ${{ secrets.clientID }}
@@ -25,3 +25,9 @@ jobs:
         distribution: 'adopt'
     - name: Build with Maven
       run: mvn compile exec:java -Dexec.classpathScope=compile -Dexec.mainClass="com.example.wowWeb.TryMain"
+    - name: Commit Database
+      run: |
+        git config --global user.name 'procesor2017'
+        git config --global user.email ${{ secrets.email }}
+        git commit -am "Refresh Database"
+        git push
